@@ -15,7 +15,7 @@ public class GestionEstudiantesTest {
     
     @BeforeEach
     void setUp() {
-        gestion = new GestionEstudiantes();
+      //  gestion = new GestionEstudiantes();
     }
     
     @Test
