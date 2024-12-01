@@ -1,12 +1,13 @@
 package es.santander.ascender.proyecto11;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 public class FileProcesor implements IFileProcesor{
-
 
     @Override
     public String leerFile(String filePath) throws Exception {
@@ -42,13 +43,20 @@ public class FileProcesor implements IFileProcesor{
         }
         return sinVocales;
     }
-
+/*
+    public static void escribirAFichero(String contenido) throws IOException {
+        Path path = Paths.get("/tmp/testEscribir.txt"); // Asegúrate de que la ruta sea válida
+        
+        // Escribe el contenido en el archivo, si el archivo no existe se crea automáticamente
+        Files.write(path, contenido.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.WRITE);
+    }
+} 
+     */ 
     @Override
     public void escribirAFile(String filePath, String content) throws Exception {
         
         // Crear archivo temporal de prueba
-        // Del test: Path tempFile = Files.createTempFile("testEscribir", ".txt");
-        Path ficheroTemp = Files.createTempFile("testEscribir", ".txt");
+        Path ficheroTemp = Path.of(filePath);
 
         // Escribir contenido en el archivo temporal
         // procesor.escribirAFile(tempFile.toString(), content);
@@ -56,20 +64,31 @@ public class FileProcesor implements IFileProcesor{
         // Clase Files, método write con parámetros (Path, arreglo de bytes del contenido )
         // Antes transformar contenido pasado por parámetro a formato String, que es el que
         // requiere 'write'; (un arreglo de bytes). String tiene el método getBytes()
+        // Escribir contenido en el archivo temporal.
         
-        Files.write(ficheroTemp, content.getBytes(),StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING); // Si no existe lo crea y si existe lo sobreescribe
+        // OJO: Lo crea en /tmp, pero si no tiene todos los permisos, será inútil.
+        // sudo chmod 1777 /tmp 
 
-        // Leer el contenido del archivo temporal para verificar
-        // String fileContent = Files.readString(tempFile);
-        // Almacenamos el contenido del fichero en un String para verlo en depuración antes de finalmente ser borrado.
-        // @SuppressWarnings("unused")
+        try {
+        Files.write(ficheroTemp, content.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+          } catch (IOException e) {
+        throw new Exception("Error escribiendo el archivo: " + e.getMessage(), e);
+          }  
+
+        /* Leer el contenido del archivo temporal para verificar
+          String fileContent = Files.readString(tempFile);
+          Almacenamos el contenido del fichero en un String para verlo en depuración 
+          ANTES de finalmente ser borrado.
+        */
+
         String contenidoFichero = Files.readString(ficheroTemp);
+
         
         // Eliminar archivo temporal después de la prueba
-        // Files.delete(tempFile);
-        Files.delete(ficheroTemp);
 
-//        throw new UnsupportedOperationException("Unimplemented method 'escribirAFile'");
+        // Files.delete(ficheroTemp);
+        // Dejamos que se el test el que lo elimine, para
+        // no provocar errores como que intente leer el archivo ya ya no esté
     }
 }
     /* POR MOTIVOS DIDÁCTICOS AÑADO ESTE TEXTO AL FINAL DEL CÓDIGO.
