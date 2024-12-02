@@ -3,6 +3,7 @@ package es.santander.ascender.proyecto11;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class FileProcesor implements IFileProcesor{
     @Override
     public String leerFile(String filePath) throws Exception {
 
-        Path camino = Path.of(filePath);
+        Path camino = Paths.get(filePath);     //Path.of(filePath); Java 11+
 
         List<String> ficheroEnt = Files.readAllLines(camino);
         String salida = String.join("\n", ficheroEnt);
@@ -40,7 +41,7 @@ public class FileProcesor implements IFileProcesor{
     @Override
     public void escribirAFile(String filePath, String content) throws Exception {
 
-        Path ficheroTemp = Path.of(filePath);
+        Path ficheroTemp = Paths.get(filePath);     //Path.of(filePath); Java 11+
 
         try {
         Files.write(ficheroTemp, content.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
@@ -48,10 +49,6 @@ public class FileProcesor implements IFileProcesor{
         throw new Exception("Error escribiendo el archivo: " + e.getMessage(), e);
           }  
 
-        String contenidoFichero = Files.readString(ficheroTemp);
-
-        // Files.delete(ficheroTemp);
-        // Dejamos que sea el test el que lo elimine, para no
-        // provocar errores como que intente leer el archivo y ya no esté. Ejem.
+        Files.readString(ficheroTemp);
     }
 }    
