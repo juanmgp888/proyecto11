@@ -3,7 +3,6 @@ package es.santander.ascender.proyecto11;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 
@@ -87,8 +86,8 @@ public class FileProcesor implements IFileProcesor{
         // Eliminar archivo temporal después de la prueba
 
         // Files.delete(ficheroTemp);
-        // Dejamos que se el test el que lo elimine, para
-        // no provocar errores como que intente leer el archivo ya ya no esté
+        // Dejamos que sea el test el que lo elimine, para
+        // no provocar errores como que intente leer el archivo y ya no esté
     }
 }
     /* POR MOTIVOS DIDÁCTICOS AÑADO ESTE TEXTO AL FINAL DEL CÓDIGO.

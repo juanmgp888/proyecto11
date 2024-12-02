@@ -15,7 +15,7 @@ public class GestionEstudiantesTest {
     
     @BeforeEach
     void setUp() {
-      //  gestion = new GestionEstudiantes();
+        gestion = new GestionEstudiantes();
     }
     
     @Test
@@ -76,4 +76,5 @@ public class GestionEstudiantesTest {
         assertEquals(92, estudiantesYCalificaciones.get("Sofia"));
         assertEquals(85, estudiantesYCalificaciones.get("Miguel"));
     }
+        
 }
